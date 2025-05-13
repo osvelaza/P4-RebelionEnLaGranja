@@ -4,7 +4,7 @@ import controlador.AnimalDAO;
 import modelo.Animal;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuAnimal {
@@ -27,7 +27,6 @@ public class MenuAnimal {
 
         System.out.print("Arete: ");
         String arete = sc.nextLine();
-
         System.out.print("Estado de salud: ");
         String salud = sc.nextLine();
 
@@ -63,7 +62,7 @@ public class MenuAnimal {
     
     public static void mostrarAnimales() {
         AnimalDAO dao = new AnimalDAO();
-        List<Animal> lista = dao.listarAnimales();
+        ArrayList<Animal> lista = dao.listarAnimales();
 
         System.out.println("\n** Lista de Animales **");
         if (lista.isEmpty()) {

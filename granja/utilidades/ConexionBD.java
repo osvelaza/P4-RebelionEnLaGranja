@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class ConexionBD {
     public static Connection conectar() {
         Connection conexion = null;
-        String url = "jdbc:mysql://localhost:3306/granja";
+        String url = "jdbc:mysql://localhost:3305/granja";
         String usuario = "root";
-        String contrasena = "1234";
+        String contrasena = "urano";
 
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasena);
@@ -20,5 +20,5 @@ public class ConexionBD {
         }
 
         return conexion;
-    }
+    }   
 }

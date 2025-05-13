@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import modelo.Animal;
 import utilidades.ConexionBD;
@@ -16,7 +15,7 @@ public class AnimalDAO {
         String sql = "INSERT INTO animales (especie, raza, fecha_nacimiento, arete, estado_salud, ubicacion, estado_actual) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, animal.getEspecie());
             stmt.setString(2, animal.getRaza());
@@ -38,8 +37,8 @@ public class AnimalDAO {
     }
     
     //CONSULTAR ANIMALES
-    public List<Animal> listarAnimales() {
-        List<Animal> lista = new ArrayList<>();
+    public ArrayList<Animal> listarAnimales() {
+        ArrayList<Animal> lista = new ArrayList<>();
         String sql = "SELECT * FROM animales";
 
         try (Connection conn = ConexionBD.conectar();
