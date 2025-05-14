@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class SubMenuAnimal {
 
-    public static void iniciar(Scanner sc) {
+    public static void iniciar(Scanner sc
+    
+    ) {
         int opcion;
 
         do {

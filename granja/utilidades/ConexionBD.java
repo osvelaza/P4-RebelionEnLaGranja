@@ -18,7 +18,6 @@ public class ConexionBD {
             System.out.println("❌ Error al conectar con la base de datos.");
             e.printStackTrace();
         }
-
         return conexion;
-    }   
+    }
 }

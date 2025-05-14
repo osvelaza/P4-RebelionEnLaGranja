@@ -8,8 +8,19 @@ import java.sql.SQLException;
 public class InicioBD {
     public static void inicio(){
         try {
-            Connection conn=ConexionBD.conectar();
+            Connection conexion = null;
+        String url = "jdbc:mysql://localhost:3305";
+        String usuario = "root";
+        String contrasena = "urano";
+
+        try {
+            conexion = DriverManager.getConnection(url, usuario, contrasena);
             System.out.println("✅ Conexión exitosa.");
+        } catch (SQLException e) {
+            System.out.println("❌ Error al conectar con la base de datos.");
+            e.printStackTrace();
+        }
+            Connection conn=conexion;
             String q1 = "create schema `granja` ;\n" + //
                                 "create table animales(\n" + //
                                 "\tespecie varchar(25),\n" + //
@@ -22,7 +33,6 @@ public class InicioBD {
                                 ");";
             PreparedStatement stmt = conn.prepareStatement(q1);
             int x = stmt.executeUpdate(q1);
-             
             if (x > 0)            
                 System.out.println("Password Successfully Updated");            
             else           
@@ -30,7 +40,7 @@ public class InicioBD {
              
             conn.close();
         } catch (SQLException e) {
-            System.out.println("❌ Error al conectar con la base de datos.");
+            System.out.println("❌ Error al inicializar.");
             e.printStackTrace();
         }
     } 

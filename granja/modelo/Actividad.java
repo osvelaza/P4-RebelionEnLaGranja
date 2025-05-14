@@ -2,18 +2,17 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class Actividad {
     private int id;
-    private LocalDate fecha;
+    private Date fecha;
     private LocalTime hora;
     private String tipoActividad;
     private int empleadoId;
     private Integer animalId; // Puede ser null
 
-    public Actividad() {}
-
-    public Actividad(int id, LocalDate fecha, LocalTime hora, String tipoActividad, int empleadoId, Integer animalId) {
+    public Actividad(Date fecha, LocalTime hora, String tipoActividad, int empleadoId, int animalId) {
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
@@ -33,10 +32,10 @@ public class Actividad {
     }
 
     //fecha
-    public LocalDate getFecha() { 
+    public Date getFecha() { 
     	return fecha; 
     }
-    public void setFecha(LocalDate fecha) { 
+    public void setFecha(Date fecha) { 
     	this.fecha = fecha; 
     }
 

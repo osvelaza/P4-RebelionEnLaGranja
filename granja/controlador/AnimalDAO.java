@@ -27,6 +27,8 @@ public class AnimalDAO {
 
             stmt.executeUpdate();
             System.out.println("✅ Animal registrado correctamente.");
+            utilidades.LoggerSistema.registrar(null,"registrar");
+            //Implementar usuarios
             return true;
 
         } catch (SQLException e) {

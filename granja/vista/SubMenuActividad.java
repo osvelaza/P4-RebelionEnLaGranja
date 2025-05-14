@@ -1,6 +1,10 @@
 package vista;
 
+import java.sql.Date;
 import java.util.Scanner;
+
+import modelo.Actividad;
+import modelo.Animal;
 
 public class SubMenuActividad {
 
@@ -20,7 +24,26 @@ public class SubMenuActividad {
 
             switch (opcion) {
                 case 1:
-                    MenuActividad.registrarActividad();
+                    System.out.println("~Registro de una nueva actividad");
+        
+                    System.out.print("Introduce la fecha en formato YYYY-MM-DD");
+                    String fechaStr = sc.nextLine();
+                    Date fechaAct = Date.valueOf(fechaStr);
+
+                    System.out.print("Introduce la hora de la actividad: ");
+                    //Proxmimamente
+
+                    System.out.print("Actividad: ");
+                    String tipoAct = sc.nextLine();
+
+                    System.out.print("Id del empleado");
+                    int idEmp = sc.nextInt();
+
+                    System.out.print("Id del animal");
+                    int idAnimal = sc.nextInt();
+
+                    Actividad act = new Actividad(fechaAct, null, tipoAct, idEmp, idAnimal);
+                    MenuActividad.registrarActividad(act);
                     break;
                 case 2:
                     MenuActividad.mostrarActividades();

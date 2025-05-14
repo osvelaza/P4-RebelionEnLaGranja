@@ -5,7 +5,6 @@ import vista.*;
 
 public class Main {
     public static void main(String[] args) {
-        utilidades.InicioBD.inicio();
         Scanner sc = new Scanner(System.in);
         int opcion;
 

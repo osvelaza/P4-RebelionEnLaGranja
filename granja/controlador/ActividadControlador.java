@@ -37,7 +37,7 @@ public class ActividadControlador {
         }
     }
 
-    public List<Actividad> obtenerPorFecha(LocalDate fecha) {
+    public ArrayList<Actividad> obtenerPorFecha(LocalDate fecha) {
         List<Actividad> actividades = new ArrayList<>();
         String sql = "SELECT * FROM Actividad WHERE fecha = ?";
 
