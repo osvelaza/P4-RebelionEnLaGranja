@@ -1,6 +1,8 @@
 package vista;
 
 import controlador.AnimalDAO;
+import exception.ErrorBorrAnimal;
+import exception.ErrorEscrituraLog;
 import modelo.Animal;
 
 import java.sql.Date;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 
 public class MenuAnimal {
 
-    public static void registrarAnimal() {
+    public static void registrarAnimal() throws ErrorEscrituraLog {
         Scanner sc = new Scanner(System.in);
         AnimalDAO dao = new AnimalDAO();
 
@@ -40,24 +42,24 @@ public class MenuAnimal {
     }
 
     // Método para borrar un animal
-    public static void borrarAnimal() {
+    public static void borrarAnimal() throws ErrorBorrAnimal {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduce el ID del animal a borrar: ");
         int id = scanner.nextInt();  // Leemos el ID del animal a borrar
-
+        scanner.close();
         // Llamamos al método borrarAnimal de AnimalDAO
         boolean eliminado = false;
 		try {
 			eliminado = AnimalDAO.borrarAnimal(id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ErrorBorrAnimal("Error inesperado al eliminar el animal");
 		}
         if (eliminado) {
             System.out.println("Animal borrado correctamente.");
         } else {
             System.out.println("No se encontró el animal o hubo un error al borrarlo.");
         }
+        scanner.close();
     }
     
     public static void mostrarAnimales() {

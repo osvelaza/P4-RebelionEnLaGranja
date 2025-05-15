@@ -22,6 +22,18 @@ public class Animal {
         this.estadoActual = estadoActual;
     }
 
+
+    public Animal(int id,String especie, String raza, Date fechaNacimiento, String arete, String estadoSalud, String ubicacion, String estadoActual) {
+        this.especie = especie;
+        this.raza = raza;
+        this.fechaNacimiento = fechaNacimiento;
+        this.arete = arete;
+        this.estadoSalud = estadoSalud;
+        this.ubicacion = ubicacion;
+        this.estadoActual = estadoActual;
+    }
+
+
     // Getters (puedes generar los setters también si los necesitas)
     public String getEspecie() { return especie; }
     public String getRaza() { return raza; }

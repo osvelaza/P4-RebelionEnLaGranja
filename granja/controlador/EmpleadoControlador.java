@@ -8,13 +8,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ErrorEscrituraLog;
+
 public class EmpleadoControlador {
 
-    public void agregarEmpleado(Empleado empleado) {
+    public void agregarEmpleado(Empleado empleado) throws ErrorEscrituraLog {
         String sql = "INSERT INTO empleados (nombre, rol, telefono, fecha_contratacion) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, empleado.getNombre());
             ps.setString(2, empleado.getRol());
@@ -22,7 +24,7 @@ public class EmpleadoControlador {
             ps.setDate(4, Date.valueOf(empleado.getFechaContratacion()));
 
             ps.executeUpdate();
-            LoggerSistema.registrar("admin", "Registró nuevo empleado: " + empleado.getNombre());
+            LoggerSistema.registrar("Registró nuevo empleado: " + empleado.getNombre());
             System.out.println("Empleado registrado correctamente.");
 
         } catch (SQLException e) {

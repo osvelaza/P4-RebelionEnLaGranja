@@ -1,14 +1,16 @@
 package vista;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import exception.ErrorEscrituraLog;
+import exception.ErrorSQL;
 import modelo.Actividad;
-import modelo.Animal;
 
 public class SubMenuActividad {
 
-    public static void iniciar(Scanner sc) {
+    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorSQL {
         int opcion;
 
         do {
@@ -25,10 +27,12 @@ public class SubMenuActividad {
             switch (opcion) {
                 case 1:
                     System.out.println("~Registro de una nueva actividad");
-        
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
                     System.out.print("Introduce la fecha en formato YYYY-MM-DD");
                     String fechaStr = sc.nextLine();
-                    Date fechaAct = Date.valueOf(fechaStr);
+                    LocalDate date = LocalDate.parse(fechaStr, formatter);
 
                     System.out.print("Introduce la hora de la actividad: ");
                     //Proxmimamente
@@ -42,7 +46,7 @@ public class SubMenuActividad {
                     System.out.print("Id del animal");
                     int idAnimal = sc.nextInt();
 
-                    Actividad act = new Actividad(fechaAct, null, tipoAct, idEmp, idAnimal);
+                    Actividad act = new Actividad(date, null, tipoAct, idEmp, idAnimal);
                     MenuActividad.registrarActividad(act);
                     break;
                 case 2:

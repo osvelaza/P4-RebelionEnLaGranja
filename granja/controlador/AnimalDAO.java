@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.ErrorEscrituraLog;
 import modelo.Animal;
 import utilidades.ConexionBD;
 
 public class AnimalDAO {
 
-    public boolean insertarAnimal(Animal animal) {
+    public boolean insertarAnimal(Animal animal) throws ErrorEscrituraLog {
         String sql = "INSERT INTO animales (especie, raza, fecha_nacimiento, arete, estado_salud, ubicacion, estado_actual) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -27,7 +28,7 @@ public class AnimalDAO {
 
             stmt.executeUpdate();
             System.out.println("✅ Animal registrado correctamente.");
-            utilidades.LoggerSistema.registrar(null,"registrar");
+            utilidades.LoggerSistema.registrar("registrar");
             //Implementar usuarios
             return true;
 
@@ -49,6 +50,7 @@ public class AnimalDAO {
 
             while (rs.next()) {
                 Animal animal = new Animal(
+                    rs.getInt(1),
                     rs.getString("especie"),
                     rs.getString("raza"),
                     rs.getDate("fecha_nacimiento"),
@@ -59,7 +61,6 @@ public class AnimalDAO {
                 );
                 lista.add(animal);
             }
-
         } catch (SQLException e) {
             System.out.println("❌ Error al obtener los animales:");
             e.printStackTrace();
@@ -95,6 +96,5 @@ public class AnimalDAO {
         }
         return eliminado;
     }
-
 }
     

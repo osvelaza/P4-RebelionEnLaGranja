@@ -6,13 +6,13 @@ import java.util.Date;
 
 public class Actividad {
     private int id;
-    private Date fecha;
+    private LocalDate fecha;
     private LocalTime hora;
     private String tipoActividad;
     private int empleadoId;
     private Integer animalId; // Puede ser null
 
-    public Actividad(Date fecha, LocalTime hora, String tipoActividad, int empleadoId, int animalId) {
+    public Actividad(LocalDate fecha, LocalTime hora, String tipoActividad, int empleadoId, int animalId) {
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
@@ -32,10 +32,10 @@ public class Actividad {
     }
 
     //fecha
-    public Date getFecha() { 
+    public LocalDate getFecha() { 
     	return fecha; 
     }
-    public void setFecha(Date fecha) { 
+    public void setFecha(LocalDate fecha) { 
     	this.fecha = fecha; 
     }
 
