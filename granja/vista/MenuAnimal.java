@@ -1,8 +1,11 @@
 package vista;
 
 import controlador.AnimalDAO;
+import exception.ErrorAnadirAnimal;
 import exception.ErrorBorrAnimal;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
+import exception.ErrorListarAnimal;
 import modelo.Animal;
 
 import java.sql.Date;
@@ -11,7 +14,7 @@ import java.util.Scanner;
 
 public class MenuAnimal {
 
-    public static void registrarAnimal() throws ErrorEscrituraLog {
+    public static void registrarAnimal() throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadirAnimal {
         Scanner sc = new Scanner(System.in);
         AnimalDAO dao = new AnimalDAO();
 
@@ -46,7 +49,6 @@ public class MenuAnimal {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduce el ID del animal a borrar: ");
         int id = scanner.nextInt();  // Leemos el ID del animal a borrar
-        scanner.close();
         // Llamamos al método borrarAnimal de AnimalDAO
         boolean eliminado = false;
 		try {
@@ -59,13 +61,12 @@ public class MenuAnimal {
         } else {
             System.out.println("No se encontró el animal o hubo un error al borrarlo.");
         }
-        scanner.close();
     }
     
-    public static void mostrarAnimales() {
+    public static void mostrarAnimales() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarAnimal {
         AnimalDAO dao = new AnimalDAO();
         ArrayList<Animal> lista = dao.listarAnimales();
-
+        System.out.println("Debug int"+lista.get(0).getId());
         System.out.println("\n** Lista de Animales **");
         if (lista.isEmpty()) {
             System.out.println("⚠️ No hay animales registrados.");

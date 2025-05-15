@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import exception.ErrorEscrituraLog;
 
 public class LoggerSistema {
-    private static final String RUTA_LOG = "../log.txt";
+    private static final String RUTA_LOG = "log.txt";
 
     public static void registrar(String accion) throws ErrorEscrituraLog {
         try (FileWriter fw = new FileWriter(RUTA_LOG, true)) {

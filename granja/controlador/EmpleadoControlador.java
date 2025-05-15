@@ -6,13 +6,16 @@ import utilidades.LoggerSistema;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
+import exception.ErrorAnadeEmp;
+import exception.ErrorBorrEmp;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
+import exception.ErrorListarEmp;
 
 public class EmpleadoControlador {
 
-    public void agregarEmpleado(Empleado empleado) throws ErrorEscrituraLog {
+    public void agregarEmpleado(Empleado empleado) throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeEmp {
         String sql = "INSERT INTO empleados (nombre, rol, telefono, fecha_contratacion) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -28,14 +31,14 @@ public class EmpleadoControlador {
             System.out.println("Empleado registrado correctamente.");
 
         } catch (SQLException e) {
-            System.out.println("Error al insertar empleado: " + e.getMessage());
+            throw new ErrorAnadeEmp("❌ Error al Error al insertar empleado.");
         }
     }
 
-    public List<Empleado> obtenerTodos() {
-        List<Empleado> empleados = new ArrayList<>();
+    public ArrayList<Empleado> obtenerTodos() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarEmp {
+        ArrayList<Empleado> empleados = new ArrayList<>();
         String sql = "SELECT * FROM empleados";
-
+        
         try (Connection conn = ConexionBD.conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -52,13 +55,13 @@ public class EmpleadoControlador {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener empleados: " + e.getMessage());
+            throw new ErrorListarEmp("❌ Error al obtener empleados.");
         }
 
         return empleados;
     }
 
-    public boolean eliminarEmpleado(int id) {
+    public boolean eliminarEmpleado(int id) throws ErrorEscrituraLog, ErrorConexionBD, ErrorBorrEmp {
         String sql = "DELETE FROM empleados WHERE id = ?";
 
         try (Connection conn = ConexionBD.conectar();
@@ -76,8 +79,7 @@ public class EmpleadoControlador {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el empleado: " + e.getMessage());
-            return false; // Hubo un error al intentar eliminar
+            throw new ErrorBorrEmp("❌ Error al eliminar el empleado.");
         }
     }
 }

@@ -8,11 +8,13 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import exception.ErrorAnadeAct;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
 
 public class ActividadControlador {
 
-    public void registrarActividad(Actividad actividad) throws ErrorEscrituraLog {
+    public void registrarActividad(Actividad actividad) throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeAct {
         String sql = "INSERT INTO Actividad (fecha, hora, tipo_actividad, empleado_id, animal_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -34,7 +36,7 @@ public class ActividadControlador {
             System.out.println("Actividad registrada correctamente.");
 
         } catch (SQLException e) {
-            System.out.println("Error al registrar actividad: " + e.getMessage());
+            throw new ErrorAnadeAct("❌ Error al registrar actividad.");
         }
     }
 /*

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exception.ErrorBorrAnimal;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
 import exception.ErrorSQL;
 import modelo.Actividad;
@@ -14,7 +15,7 @@ import utilidades.ConexionBD;
 
 public class MenuActividad {
 
-    public static void registrarActividad(Actividad act) throws ErrorEscrituraLog, ErrorSQL {
+    public static void registrarActividad(Actividad act) throws ErrorEscrituraLog, ErrorSQL, ErrorConexionBD {
         String sql = "INSERT INTO actividad (fecha, hora, tipo_actividad, id_empleado,id) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -35,6 +36,7 @@ public class MenuActividad {
     }
 
     public static void mostrarActividades() {
+    /*
         ArrayList <Actividad> lista=controlador.ActividadControlador.obtenerPorFecha(fecha);
 
         System.out.println("\n** Lista de Animales **");
@@ -45,6 +47,7 @@ public class MenuActividad {
                 System.out.println(animal); // Asegúrate de que `Animal` tenga un método `toString()` adecuado
             }
         }
+            */
     }
 
     public static void borrarActividad() {

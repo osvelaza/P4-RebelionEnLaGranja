@@ -6,13 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.ErrorAnadirAnimal;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
+import exception.ErrorListarAnimal;
 import modelo.Animal;
 import utilidades.ConexionBD;
 
 public class AnimalDAO {
 
-    public boolean insertarAnimal(Animal animal) throws ErrorEscrituraLog {
+    public boolean insertarAnimal(Animal animal) throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadirAnimal {
         String sql = "INSERT INTO animales (especie, raza, fecha_nacimiento, arete, estado_salud, ubicacion, estado_actual) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -33,14 +36,12 @@ public class AnimalDAO {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al insertar el animal:");
-            e.printStackTrace();
-            return false;
+            throw new ErrorAnadirAnimal("❌ Error añadir el animal a la base de datos");
         }
     }
     
     //CONSULTAR ANIMALES
-    public ArrayList<Animal> listarAnimales() {
+    public ArrayList<Animal> listarAnimales() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarAnimal {
         ArrayList<Animal> lista = new ArrayList<>();
         String sql = "SELECT * FROM animales";
 
@@ -50,7 +51,7 @@ public class AnimalDAO {
 
             while (rs.next()) {
                 Animal animal = new Animal(
-                    rs.getInt(1),
+                    rs.getInt("id"),
                     rs.getString("especie"),
                     rs.getString("raza"),
                     rs.getDate("fecha_nacimiento"),
@@ -62,14 +63,13 @@ public class AnimalDAO {
                 lista.add(animal);
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al obtener los animales:");
-            e.printStackTrace();
+            throw new ErrorListarAnimal("❌ Error al obtener los animales para listar");
         }
 
         return lista;
     }
     
-    public static boolean borrarAnimal(int id) {
+    public static boolean borrarAnimal(int id) throws ErrorEscrituraLog, ErrorConexionBD {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean eliminado = false;

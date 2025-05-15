@@ -52,8 +52,7 @@ public class Animal {
 
 @Override
 public String toString() {
-    return "Arete: " + arete + " | Especie: " + especie + " | Raza: " + raza + " | Fecha Nacimiento: " + fechaNacimiento +
+    return "ID:"+id+"Arete: " + arete + " | Especie: " + especie + " | Raza: " + raza + " | Fecha Nacimiento: " + fechaNacimiento +
            " | Estado Salud: " + estadoSalud + " | Ubicación: " + ubicacion + " | Estado: " + estadoActual;
 }
-
 }

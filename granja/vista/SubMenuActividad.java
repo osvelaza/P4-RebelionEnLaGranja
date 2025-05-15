@@ -4,13 +4,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
 import exception.ErrorSQL;
 import modelo.Actividad;
 
 public class SubMenuActividad {
 
-    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorSQL {
+    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorSQL, ErrorConexionBD {
         int opcion;
 
         do {

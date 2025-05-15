@@ -2,12 +2,15 @@ package vista;
 
 import java.util.Scanner;
 
+import exception.ErrorAnadirAnimal;
 import exception.ErrorBorrAnimal;
+import exception.ErrorConexionBD;
 import exception.ErrorEscrituraLog;
+import exception.ErrorListarAnimal;
 import utilidades.LoggerSistema;
 
 public class SubMenuAnimal {
-    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorBorrAnimal {
+    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorBorrAnimal, ErrorConexionBD, ErrorAnadirAnimal, ErrorListarAnimal {
         int opcion;
         do {
             System.out.println("\n--- GESTIÓN DE ANIMALES ---");
