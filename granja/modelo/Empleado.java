@@ -11,7 +11,7 @@ public class Empleado {
 
     public Empleado() {}
 
-    public Empleado(int id, String nombre, String rol, String telefono, LocalDate fechaContratacion) {
+    public Empleado(String nombre, String rol, String telefono, LocalDate fechaContratacion) {
         this.id = id;
         this.nombre = nombre;
         this.rol = rol;

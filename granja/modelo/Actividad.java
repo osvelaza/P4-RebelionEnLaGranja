@@ -2,7 +2,6 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 public class Actividad {
     private int id;
@@ -11,6 +10,8 @@ public class Actividad {
     private String tipoActividad;
     private int empleadoId;
     private Integer animalId; // Puede ser null
+
+    public Actividad() {}
 
     public Actividad(LocalDate fecha, LocalTime hora, String tipoActividad, int empleadoId, int animalId) {
         this.id = id;

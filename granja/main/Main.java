@@ -2,19 +2,10 @@ package main;
 
 import java.util.Scanner;
 
-import exception.ErrorAnadeEmp;
-import exception.ErrorAnadirAnimal;
-import exception.ErrorBorrAnimal;
-import exception.ErrorBorrEmp;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarAnimal;
-import exception.ErrorListarEmp;
-import exception.ErrorSQL;
 import vista.*;
 
 public class Main {
-    public static void main(String[] args) throws ErrorEscrituraLog, ErrorBorrAnimal, ErrorSQL, ErrorConexionBD, ErrorAnadirAnimal, ErrorListarAnimal, ErrorAnadeEmp, ErrorListarEmp, ErrorBorrEmp {
+    public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         int opcion=1;
         boolean testint;
@@ -48,10 +39,10 @@ public class Main {
                 	SubMenuActividad.iniciar(sc);
                     break;
                 case 4:
-                    utilidades.ExportadorCSV.exportarTabla("empleados", "csv/empleados");
-                    utilidades.ExportadorCSV.exportarTabla("animales", "csv/animales");
-                    utilidades.ExportadorCSV.exportarTabla("actividades", "csv/actividades");
-                    utilidades.ExportadorCSV.exportarTabla("actividad-animal", "csv/act-anim");
+                    utilidades.ExportadorCSV.exportarTabla("empleados", "empleados.csv");
+                    utilidades.ExportadorCSV.exportarTabla("animales", "animales.csv");
+                    utilidades.ExportadorCSV.exportarTabla("actividades", "actividades.csv");
+                    utilidades.ExportadorCSV.exportarTabla("actividad-animal", "act-anim.csv");
                     break;
                 case 5:
                     System.out.println("👋 Saliendo del sistema...");
@@ -59,6 +50,6 @@ public class Main {
                 default:
                     System.out.println("❌ Opción no válida. Intenta de nuevo.");
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
     }
 }

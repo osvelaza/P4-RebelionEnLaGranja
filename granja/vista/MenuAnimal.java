@@ -1,12 +1,8 @@
 package vista;
 
 import controlador.AnimalDAO;
-import exception.ErrorAnadirAnimal;
-import exception.ErrorBorrAnimal;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarAnimal;
 import modelo.Animal;
+import utilidades.LoggerSistema;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -14,7 +10,7 @@ import java.util.Scanner;
 
 public class MenuAnimal {
 
-    public static void registrarAnimal() throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadirAnimal {
+    public static void registrarAnimal(){
         Scanner sc = new Scanner(System.in);
         AnimalDAO dao = new AnimalDAO();
 
@@ -26,27 +22,35 @@ public class MenuAnimal {
         System.out.print("Raza: ");
         String raza = sc.nextLine();
 
-        System.out.print("Fecha de nacimiento (YYYY-MM-DD): ");
-        String fechaStr = sc.nextLine();
-        Date fechaNacimiento = Date.valueOf(fechaStr);
+        Date fechaNacimiento = null;
+        try {
+            System.out.print("Fecha de nacimiento (YYYY-MM-DD): ");
+            String fechaStr = sc.nextLine();
+            fechaNacimiento = Date.valueOf(fechaStr);
 
-        System.out.print("Arete: ");
-        String arete = sc.nextLine();
-        System.out.print("Estado de salud: ");
-        String salud = sc.nextLine();
+            System.out.print("Arete: ");
+            String arete = sc.nextLine();
+            
+            System.out.print("Estado de salud: ");
+            String salud = sc.nextLine();
 
-        System.out.print("Ubicación: ");
-        String ubicacion = sc.nextLine();
+            System.out.print("Ubicación: ");
+            String ubicacion = sc.nextLine();
 
-        String estadoActual = "activo"; // por defecto
+            String estadoActual = "activo"; // por defecto
 
-        Animal nuevoAnimal = new Animal(especie, raza, fechaNacimiento, arete, salud, ubicacion, estadoActual);
-        dao.insertarAnimal(nuevoAnimal);
+            Animal nuevoAnimal = new Animal(especie, raza, fechaNacimiento, arete, salud, ubicacion, estadoActual);
+            dao.insertarAnimal(nuevoAnimal);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al crear la fecha. Asegúrate de tener el formato YYYY-MM-DD "+e.getMessage());
+        }
     }
 
     // Método para borrar un animal
-    public static void borrarAnimal() throws ErrorBorrAnimal {
+    public static void borrarAnimal(){
         Scanner scanner = new Scanner(System.in);
+        mostrarAnimales();
         System.out.print("Introduce el ID del animal a borrar: ");
         int id = scanner.nextInt();  // Leemos el ID del animal a borrar
         // Llamamos al método borrarAnimal de AnimalDAO
@@ -54,26 +58,21 @@ public class MenuAnimal {
 		try {
 			eliminado = AnimalDAO.borrarAnimal(id);
 		} catch (Exception e) {
-			throw new ErrorBorrAnimal("Error inesperado al eliminar el animal");
+            System.out.println("Error inesperado al eliminar el animal"+e.getMessage());
 		}
         if (eliminado) {
             System.out.println("Animal borrado correctamente.");
+            LoggerSistema.registrar("Eliminado animal con id "+id);
         } else {
             System.out.println("No se encontró el animal o hubo un error al borrarlo.");
         }
     }
-    
-    public static void mostrarAnimales() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarAnimal {
+
+    public static void mostrarAnimales(){
         AnimalDAO dao = new AnimalDAO();
         ArrayList<Animal> lista = dao.listarAnimales();
-        System.out.println("Debug int"+lista.get(0).getId());
-        System.out.println("\n** Lista de Animales **");
         if (lista.isEmpty()) {
             System.out.println("⚠️ No hay animales registrados.");
-        } else {
-            for (Animal animal : lista) {
-                System.out.println(animal); // Asegúrate de que `Animal` tenga un método `toString()` adecuado
-            }
         }
     }
 }

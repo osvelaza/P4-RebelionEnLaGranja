@@ -3,20 +3,15 @@ package vista;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-
-import exception.ErrorBorrAnimal;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorSQL;
 import modelo.Actividad;
-import modelo.Animal;
 import utilidades.ConexionBD;
 
 public class MenuActividad {
 
-    public static void registrarActividad(Actividad act) throws ErrorEscrituraLog, ErrorSQL, ErrorConexionBD {
-        String sql = "INSERT INTO actividad (fecha, hora, tipo_actividad, id_empleado,id) VALUES (?, ?, ?, ?)";
+    public static void registrarActividad(Actividad act){
+        String sql = "INSERT INTO actividades (fecha, hora, tipo_actividad, id_empleado,id_animal) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -31,12 +26,11 @@ public class MenuActividad {
             utilidades.LoggerSistema.registrar("registrar");
             //Implementar usuarios
         } catch (SQLException e) {
-            throw new ErrorSQL("❌ Error al insertar el animal:");
+            System.out.println("❌ Error al insertar la actividad:"+e.getMessage());
         }
     }
 
-    public static void mostrarActividades() {
-    /*
+    public static void mostrarActividades(LocalDate fecha){
         ArrayList <Actividad> lista=controlador.ActividadControlador.obtenerPorFecha(fecha);
 
         System.out.println("\n** Lista de Animales **");
@@ -47,7 +41,6 @@ public class MenuActividad {
                 System.out.println(animal); // Asegúrate de que `Animal` tenga un método `toString()` adecuado
             }
         }
-            */
     }
 
     public static void borrarActividad() {

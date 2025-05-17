@@ -2,15 +2,11 @@ package vista;
 
 import java.util.Scanner;
 
-import exception.ErrorAnadeEmp;
-import exception.ErrorBorrEmp;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarEmp;
+import utilidades.LoggerSistema;
 
 public class SubMenuEmpleado {
 
-    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeEmp, ErrorListarEmp, ErrorBorrEmp {
+    public static void iniciar(Scanner sc){
         int opcion=1;
         boolean testint;
 
@@ -38,6 +34,7 @@ public class SubMenuEmpleado {
                     break;
                 case 2:
                     MenuEmpleado.mostrarEmpleados();
+                    LoggerSistema.registrar("Mostrar empleados");
                     break;
                 case 3:
                     MenuEmpleado.eliminarEmpleado();

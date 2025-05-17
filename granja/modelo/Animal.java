@@ -22,19 +22,7 @@ public class Animal {
         this.estadoActual = estadoActual;
     }
 
-
-    public Animal(int id,String especie, String raza, Date fechaNacimiento, String arete, String estadoSalud, String ubicacion, String estadoActual) {
-        this.especie = especie;
-        this.raza = raza;
-        this.fechaNacimiento = fechaNacimiento;
-        this.arete = arete;
-        this.estadoSalud = estadoSalud;
-        this.ubicacion = ubicacion;
-        this.estadoActual = estadoActual;
-    }
-
-
-    // Getters (puedes generar los setters también si los necesitas)
+    // Getters
     public String getEspecie() { return especie; }
     public String getRaza() { return raza; }
     public Date getFechaNacimiento() { return fechaNacimiento; }
@@ -45,14 +33,14 @@ public class Animal {
     public int getId() {
     	return id;
     }
-
+//Setter
     public void setId(int id) {
     	this.id = id;
     }
 
 @Override
 public String toString() {
-    return "ID:"+id+"Arete: " + arete + " | Especie: " + especie + " | Raza: " + raza + " | Fecha Nacimiento: " + fechaNacimiento +
+    return "Arete: " + arete + " | Especie: " + especie + " | Raza: " + raza + " | Fecha Nacimiento: " + fechaNacimiento +
            " | Estado Salud: " + estadoSalud + " | Ubicación: " + ubicacion + " | Estado: " + estadoActual;
 }
 }

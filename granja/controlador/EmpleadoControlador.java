@@ -7,15 +7,9 @@ import utilidades.LoggerSistema;
 import java.sql.*;
 import java.util.ArrayList;
 
-import exception.ErrorAnadeEmp;
-import exception.ErrorBorrEmp;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarEmp;
-
 public class EmpleadoControlador {
 
-    public void agregarEmpleado(Empleado empleado) throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeEmp {
+    public void agregarEmpleado(Empleado empleado){
         String sql = "INSERT INTO empleados (nombre, rol, telefono, fecha_contratacion) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -31,11 +25,11 @@ public class EmpleadoControlador {
             System.out.println("Empleado registrado correctamente.");
 
         } catch (SQLException e) {
-            throw new ErrorAnadeEmp("❌ Error al Error al insertar empleado.");
+            System.out.println("❌ Error al Error al insertar empleado."+e.getMessage());
         }
     }
 
-    public ArrayList<Empleado> obtenerTodos() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarEmp {
+    public static ArrayList<Empleado> obtenerTodos(){
         ArrayList<Empleado> empleados = new ArrayList<>();
         String sql = "SELECT * FROM empleados";
         
@@ -55,13 +49,13 @@ public class EmpleadoControlador {
             }
 
         } catch (SQLException e) {
-            throw new ErrorListarEmp("❌ Error al obtener empleados.");
+            System.out.println("❌ Error al obtener empleados."+e.getMessage());
         }
 
         return empleados;
     }
 
-    public boolean eliminarEmpleado(int id) throws ErrorEscrituraLog, ErrorConexionBD, ErrorBorrEmp {
+    public boolean eliminarEmpleado(int id){
         String sql = "DELETE FROM empleados WHERE id = ?";
 
         try (Connection conn = ConexionBD.conectar();
@@ -79,7 +73,8 @@ public class EmpleadoControlador {
             }
 
         } catch (SQLException e) {
-            throw new ErrorBorrEmp("❌ Error al eliminar el empleado.");
+            System.out.println("❌ Error al eliminar el empleado."+e.getMessage());
+            return false;
         }
     }
 }

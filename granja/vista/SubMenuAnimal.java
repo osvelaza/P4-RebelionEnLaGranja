@@ -1,17 +1,12 @@
 package vista;
 
 import java.util.Scanner;
-
-import exception.ErrorAnadirAnimal;
-import exception.ErrorBorrAnimal;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarAnimal;
 import utilidades.LoggerSistema;
 
 public class SubMenuAnimal {
-    public static void iniciar(Scanner sc) throws ErrorEscrituraLog, ErrorBorrAnimal, ErrorConexionBD, ErrorAnadirAnimal, ErrorListarAnimal {
-        int opcion;
+    public static void iniciar(Scanner sc){
+        int opcion=0;
+        boolean testint;
         do {
             System.out.println("\n--- GESTIÓN DE ANIMALES ---");
             System.out.println("1. Registrar nuevo animal");
@@ -20,8 +15,15 @@ public class SubMenuAnimal {
             System.out.println("4. Volver al menú principal");
 
             System.out.print("Elige una opción: ");
-            opcion = sc.nextInt();
-            sc.nextLine(); // limpiar buffer
+            do{
+                testint=(!sc.hasNextInt());
+                if(testint){
+                    System.out.println("Introduce un número entero");
+                    sc.nextLine();
+                }else{
+                    opcion = sc.nextInt();
+                }
+            }while(testint);
 
             switch (opcion) {
                 case 1:
@@ -33,7 +35,6 @@ public class SubMenuAnimal {
                     break;
                 case 3:
                     MenuAnimal.borrarAnimal();
-                    LoggerSistema.registrar("eliminar");
                     break;
                 case 4:
                     System.out.println("🔙 Volviendo al menú principal...");

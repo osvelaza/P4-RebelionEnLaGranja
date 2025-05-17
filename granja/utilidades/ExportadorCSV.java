@@ -1,9 +1,7 @@
 package utilidades;
  
 import java.io.FileWriter;
-
 import java.io.IOException;
-
 import java.sql.*;
 
 import exception.ErrorConexionBD;
@@ -11,7 +9,7 @@ import exception.ErrorEscrituraLog;
  
 public class ExportadorCSV {
  
-    public static void exportarTabla(String nombreTabla, String rutaArchivo) throws ErrorEscrituraLog, ErrorConexionBD {
+    public static void exportarTabla(String nombreTabla, String rutaArchivo){
         String sql = "SELECT * FROM " + nombreTabla;
  
         try (Connection conn = ConexionBD.conectar();
@@ -38,7 +36,7 @@ public class ExportadorCSV {
             }
             System.out.println("Datos exportados correctamente a " + rutaArchivo);
         } catch (SQLException | IOException e) {
-            System.out.println("Error al exportar CSV: " + e.getMessage());
+            System.out.println("Verifique que haya permisos de escritura en la carpeta: "+ rutaArchivo + e.getMessage());
         }
     }
 }

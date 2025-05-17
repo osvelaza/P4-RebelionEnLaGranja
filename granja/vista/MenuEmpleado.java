@@ -1,15 +1,12 @@
 package vista;
 
 import controlador.EmpleadoControlador;
-import exception.ErrorAnadeEmp;
-import exception.ErrorBorrEmp;
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
-import exception.ErrorListarEmp;
 import modelo.Empleado;
+import utilidades.LoggerSistema;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuEmpleado {
@@ -17,7 +14,7 @@ public class MenuEmpleado {
     private static Scanner scanner = new Scanner(System.in);
     private static EmpleadoControlador controlador = new EmpleadoControlador();
 
-    public static void mostrarMenu() throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeEmp, ErrorListarEmp, ErrorBorrEmp {
+    public static void mostrarMenu(){
         int opcion=1;
         boolean testint;
         do {
@@ -25,7 +22,7 @@ public class MenuEmpleado {
             System.out.println("1. Registrar nuevo empleado");
             System.out.println("2. Mostrar empleados");
             System.out.println("3. Eliminar empleado");
-            System.out.println("0. Volver al menú principal");
+            System.out.println("4. Volver al menú principal");
             System.out.print("Opción: ");
 
             do{
@@ -48,7 +45,7 @@ public class MenuEmpleado {
                 case 3:
                     eliminarEmpleado();
                     break;
-                case 0:
+                case 4:
                     System.out.println("Volviendo al menú principal...");
                     break;
                 default:
@@ -58,28 +55,36 @@ public class MenuEmpleado {
         } while (opcion != 0);
     }
 
-    public static void registrarEmpleado() throws ErrorEscrituraLog, ErrorConexionBD, ErrorAnadeEmp {
-        System.out.println("\n~ Registro de nuevo empleado ~");
+    public static void registrarEmpleado(){
+        try {
+            System.out.println("\n~ Registro de nuevo empleado ~");
 
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
+            System.out.print("Nombre: ");
+            String nombre = scanner.nextLine();
 
-        System.out.print("Rol: ");
-        String rol = scanner.nextLine();
+            System.out.print("Rol: ");
+            String rol = scanner.nextLine();
 
-        System.out.print("Teléfono: ");
-        String telefono = scanner.nextLine();
+            String telefono;
+            do{
+                System.out.print("Introduce el número de teléfono: ");
+                telefono=scanner.nextLine();
+            }while(telefono.length()!=9);
 
-        System.out.print("Fecha de contratación (YYYY-MM-DD): ");
-        String fechaStr = scanner.nextLine();
-        LocalDate fechaContratacion = LocalDate.parse(fechaStr);
+            System.out.print("Fecha de contratación (YYYY-MM-DD): ");
+            String fechaStr = scanner.nextLine();
+            LocalDate fechaContratacion = LocalDate.parse(fechaStr);
+            Empleado emp = new Empleado(nombre, rol, telefono, fechaContratacion);
+            controlador.agregarEmpleado(emp);
+            LoggerSistema.registrar("Agregar empleado"+System.lineSeparator()+emp);
 
-        Empleado emp = new Empleado(0, nombre, rol, telefono, fechaContratacion);
-        controlador.agregarEmpleado(emp);
+        } catch (DateTimeException e) {
+            System.out.println("❌ Asegúrate de introducir la fecha en formato YYYY-MM-DD "+e.getMessage());
+        }
     }
 
-    public static void mostrarEmpleados() throws ErrorEscrituraLog, ErrorConexionBD, ErrorListarEmp {
-        List<Empleado> empleados = controlador.obtenerTodos();
+    public static void mostrarEmpleados(){
+        ArrayList<Empleado> empleados = controlador.obtenerTodos();
 
         System.out.println("\n** Lista de empleados **");
         if (empleados.isEmpty()) {
@@ -91,15 +96,25 @@ public class MenuEmpleado {
         }
     }
 
-    public static void eliminarEmpleado() throws ErrorEscrituraLog, ErrorConexionBD, ErrorBorrEmp {
-        System.out.print("Introduce el ID del empleado a eliminar: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
+    public static void eliminarEmpleado(){
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        empleados=EmpleadoControlador.obtenerTodos();
+        if(empleados.isEmpty()){
+            System.out.println("⚠️ No hay empleados registrados.");
+        }else{
+            for (Empleado e : empleados) {
+                System.out.println(e);
+            }
+            System.out.print("Introduce el ID del empleado a eliminar: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
 
         boolean eliminado = controlador.eliminarEmpleado(id);
         if (eliminado) {
+            LoggerSistema.registrar("Eliminado empleado con id "+id);
         } else {
             System.out.println("❌ No se pudo eliminar el empleado (puede que no exista).");
+        }
         }
     }
 }
