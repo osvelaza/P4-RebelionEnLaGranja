@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import exception.ErrorEscrituraLog;
-
 public class LoggerSistema {
     private static final String RUTA_LOG = "log.txt";
 

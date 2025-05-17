@@ -1,6 +1,8 @@
 package vista;
 
 import controlador.AnimalDAO;
+import enumJ.saludAnimal;
+import enumJ.ubicacionAnimal;
 import modelo.Animal;
 import utilidades.LoggerSistema;
 
@@ -32,10 +34,25 @@ public class MenuAnimal {
             String arete = sc.nextLine();
             
             System.out.print("Estado de salud: ");
-            String salud = sc.nextLine();
+            String salud;
+            do {
+                System.out.print("Introduce la ubicación del animal: ");
+                for (saludAnimal value : saludAnimal.values()){
+                    System.out.print(value.toString());
+                }
+                System.out.println();
+                salud = sc.nextLine();
+            } while (!enumJ.general.checkEnumAnimal(salud));
 
-            System.out.print("Ubicación: ");
-            String ubicacion = sc.nextLine();
+            String ubicacion;
+            do {
+                System.out.print("Introduce la ubicación del animal: ");
+                for (ubicacionAnimal value : ubicacionAnimal.values()){
+                    System.out.print(value.toString());
+                }
+                System.out.println();
+                ubicacion = sc.nextLine();
+            } while (!enumJ.general.checkEnumAnimal(ubicacion));
 
             String estadoActual = "activo"; // por defecto
 

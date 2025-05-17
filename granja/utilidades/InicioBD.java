@@ -5,10 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import exception.ErrorConexionBD;
-
 public class InicioBD {
-    public static void inicio() throws ErrorConexionBD{
+    public static void inicio(){
         try {
             Connection conexion = null;
         String url = "jdbc:mysql://localhost:3305";
@@ -19,7 +17,7 @@ public class InicioBD {
             conexion = DriverManager.getConnection(url, usuario, contrasena);
             System.out.println("✅ Conexión exitosa.");
         } catch (SQLException e) {
-            throw new ErrorConexionBD("❌ Error al conectar con la base de datos.");
+            System.out.println("❌ Error al conectar con la base de datos. "+e.getMessage());
         }
             Connection conn=conexion;
             String q1 = "create schema `granja` ;\n" + //

@@ -1,6 +1,8 @@
 package vista;
 
 import controlador.EmpleadoControlador;
+import enumJ.rolEmpleado;
+import enumJ.ubicacionAnimal;
 import modelo.Empleado;
 import utilidades.LoggerSistema;
 
@@ -63,7 +65,15 @@ public class MenuEmpleado {
             String nombre = scanner.nextLine();
 
             System.out.print("Rol: ");
-            String rol = scanner.nextLine();
+            String rol;
+            do {
+                System.out.print("Introduce el rol del empleado: ");
+                for (rolEmpleado value : rolEmpleado.values()){
+                    System.out.print(value.toString());
+                }
+                System.out.println();
+                rol = scanner.nextLine();
+            } while (!enumJ.general.checkEnumAnimal(rol));
 
             String telefono;
             do{

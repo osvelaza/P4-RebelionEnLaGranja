@@ -23,3 +23,5 @@
 [2025-05-17 18:03] - Acción realizada: registrar
 [2025-05-17 18:03] - Acción realizada: Agregar animal
 Arete: b | Especie: b | Raza: b | Fecha Nacimiento: 2025-07-04 | Estado Salud: b | Ubicación: b | Estado: activo
+[2025-05-17 20:12] - Acción realizada: Agregar animal
+Arete: 1 | Especie: 1 | Raza: 1 | Fecha Nacimiento: 2025-12-17 | Estado Salud: 1 | Ubicación: corral | Estado: activo

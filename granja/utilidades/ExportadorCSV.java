@@ -3,9 +3,6 @@ package utilidades;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-
-import exception.ErrorConexionBD;
-import exception.ErrorEscrituraLog;
  
 public class ExportadorCSV {
  
