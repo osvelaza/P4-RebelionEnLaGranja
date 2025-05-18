@@ -56,7 +56,7 @@ public class ActividadControlador {
             SELECT a.*, aa.id_animal
             FROM actividades a
             LEFT JOIN actividad_animal aa ON a.id = aa.id_actividad
-            WHERE a.fecha = ?
+            WHERE a.fecha <= ?
         """;
 
         try (Connection conn = ConexionBD.conectar();

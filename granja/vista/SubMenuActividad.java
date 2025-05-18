@@ -7,7 +7,8 @@ import utilidades.LoggerSistema;
 public class SubMenuActividad {
 
     public static void iniciar(Scanner sc) {
-        int opcion;
+        int opcion=0;
+        boolean testint;
 
         do {
             System.out.println("\n--- GESTIÓN DE ACTIVIDADES ---");
@@ -17,8 +18,15 @@ public class SubMenuActividad {
             System.out.println("4. Volver al menú principal");
 
             System.out.print("Elige una opción: ");
-            opcion = sc.nextInt();
-            sc.nextLine(); // limpiar buffer
+            do{
+                testint=(!sc.hasNextInt());
+                if(testint){
+                    System.out.println("Introduce un número entero");
+                    sc.nextLine();
+                }else{
+                    opcion = sc.nextInt();
+                }
+            }while(testint);
 
             switch (opcion) {
                 case 1:

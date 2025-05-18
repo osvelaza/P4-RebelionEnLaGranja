@@ -54,7 +54,6 @@ public class MenuActividad {
                 }
                 System.out.print("Introduce el ID del empleado:");
                 empleadoId = Integer.parseInt(sc.nextLine());
-                sc.nextLine(); // Limpiar el buffer
             }
 
             System.out.print("IDs de los animales (separados por comas, o pulsa Enter para omitir): ");
@@ -64,12 +63,8 @@ public class MenuActividad {
             if(animalesList.isEmpty()){
                 System.out.println("⚠️ No hay empleados registrados.");
             }else{
-                for (Animal e : animalesList) {
-                    System.out.println(e);
-                }
                 System.out.print("Introduce el ID del los animales separados por comas: ");
                 inputAnimales = sc.nextLine();
-                sc.nextLine(); // Limpiar el buffer
             }
 
             Actividad actividad = new Actividad();
@@ -100,7 +95,7 @@ public class MenuActividad {
         System.out.println("\n📋 CONSULTA DE ACTIVIDADES");
 
         try {
-            System.out.print("Introduce la fecha (YYYY-MM-DD): ");
+            System.out.print("Introduce la fecha límite(YYYY-MM-DD). Se mostrarán todas fechas inferiores.");
             LocalDate fecha = LocalDate.parse(sc.nextLine());
 
             ArrayList<Actividad> lista = controlador.obtenerPorFecha(fecha);

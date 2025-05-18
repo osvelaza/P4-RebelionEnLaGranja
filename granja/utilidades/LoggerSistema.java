@@ -13,7 +13,7 @@ public class LoggerSistema {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             fw.write("[" + timestamp + "] - Acción realizada: " + accion + "\n");
         } catch (IOException e) {
-            System.out.println("Error al escribir el log. revisar permisos de escritura."+e.getMessage());
+            System.out.println("Error al escribir el log. revisar permisos de escritura. "+e.getMessage());
         }
     }
 }

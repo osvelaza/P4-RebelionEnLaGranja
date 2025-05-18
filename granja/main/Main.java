@@ -42,7 +42,6 @@ public class Main {
                     utilidades.ExportadorCSV.exportarTabla("empleados", "empleados.csv");
                     utilidades.ExportadorCSV.exportarTabla("animales", "animales.csv");
                     utilidades.ExportadorCSV.exportarTabla("actividades", "actividades.csv");
-                    utilidades.ExportadorCSV.exportarTabla("actividad-animal", "act-anim.csv");
                     break;
                 case 5:
                     System.out.println("👋 Saliendo del sistema...");
