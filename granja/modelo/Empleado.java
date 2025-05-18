@@ -12,7 +12,6 @@ public class Empleado {
     public Empleado() {}
 
     public Empleado(String nombre, String rol, String telefono, LocalDate fechaContratacion) {
-        this.id = id;
         this.nombre = nombre;
         this.rol = rol;
         this.telefono = telefono;
@@ -20,7 +19,6 @@ public class Empleado {
     }
 
     // Getters y Setters
-    
     //id
     public int getId() { 
     	return id;

@@ -64,6 +64,25 @@ public class MenuAnimal {
         }
     }
 
+    public static void cambEstado(){
+        Scanner scanner = new Scanner(System.in);
+        int id;
+        String estado;
+        mostrarAnimales();
+        System.out.println("Introduce los id del animal:");
+        id=scanner.nextInt();
+        do {
+            System.out.println("Introduce el estado al que lo quieres cambiar");
+            for (saludAnimal value : saludAnimal.values()){
+                System.out.print(value.toString());
+                System.out.println();
+            }
+            System.out.println();
+            estado = scanner.nextLine();
+        } while (!enumJ.general.checkEnumSaludAnimal(estado));
+        controlador.AnimalDAO.camEstadoBD(id,estado);
+    }
+
     // Método para borrar un animal
     public static void borrarAnimal(){
         Scanner scanner = new Scanner(System.in);

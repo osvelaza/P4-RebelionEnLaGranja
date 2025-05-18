@@ -3,90 +3,123 @@ package controlador;
 import modelo.Actividad;
 import utilidades.ConexionBD;
 import utilidades.LoggerSistema;
-
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 public class ActividadControlador {
-    public static void registrarActividad(Actividad actividad){
-        String sql = "INSERT INTO actividades (fecha, hora, tipo_actividad, id_empleado) VALUES (?, ?, ?, ?)";
+
+    public void registrarActividad(Actividad actividad) {
+        String sqlActividad = "INSERT INTO actividades (fecha, hora, tipo_actividad, id_empleado) VALUES (?, ?, ?, ?)";
+        String sqlRelacion = "INSERT INTO actividad_animal (id_actividad, id_animal) VALUES (?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement psActividad = conn.prepareStatement(sqlActividad, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement psRelacion = conn.prepareStatement(sqlRelacion)) {
 
-            ps.setObject(1, actividad.getFecha());
-            ps.setTime(2, Time.valueOf(actividad.getHora()));
-            ps.setString(3, actividad.getTipoActividad());
-            ps.setInt(4, actividad.getEmpleadoId());
+            // Insertar actividad
+            psActividad.setDate(1, Date.valueOf(actividad.getFecha()));
+            psActividad.setTime(2, Time.valueOf(actividad.getHora()));
+            psActividad.setString(3, actividad.getTipoActividad());
+            psActividad.setInt(4, actividad.getEmpleadoId());
+            psActividad.executeUpdate();
 
-            if (actividad.getAnimalId() != null) {
-                ps.setInt(5, actividad.getAnimalId());
-            } else {
-                ps.setNull(5, Types.INTEGER);
+            // Obtener el ID generado
+            ResultSet rs = psActividad.getGeneratedKeys();
+            int idActividad = -1;
+            if (rs.next()) {
+                idActividad = rs.getInt(1);
             }
 
-            ps.executeUpdate();
-            LoggerSistema.registrar("Registró actividad: " + actividad.getTipoActividad());
+            // Insertar relaciones con animales
+            if (actividad.getAnimalesID() != null) {
+                for (Integer idAnimal : actividad.getAnimalesID()) {
+                    psRelacion.setInt(1, idActividad);
+                    psRelacion.setInt(2, idAnimal);
+                    psRelacion.executeUpdate();
+                }
+            }
+
+            LoggerSistema.registrar("admin Registró actividad: " + actividad.getTipoActividad());
             System.out.println("Actividad registrada correctamente.");
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al registrar la actividad. "+e.getMessage());
+            System.out.println("Error al registrar actividad: " + e.getMessage());
         }
     }
 
-    public static ArrayList<Actividad> obtenerPorFecha(LocalDate fecha){
-        ArrayList<Actividad> actividades = new ArrayList<>();
-        String sql = "SELECT * FROM Actividad WHERE fecha = ?";
+    public ArrayList<Actividad> obtenerPorFecha(LocalDate fecha) {
+        Map<Integer, Actividad> actividadMap = new HashMap<>();
+
+        String sql = """
+            SELECT a.*, aa.id_animal
+            FROM actividades a
+            LEFT JOIN actividad_animal aa ON a.id = aa.id_actividad
+            WHERE a.fecha = ?
+        """;
 
         try (Connection conn = ConexionBD.conectar();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setDate(1, Date.valueOf(fecha));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Actividad act = new Actividad();
-                act.setId(rs.getInt("id"));
-                act.setFecha(rs.getDate("fecha").toLocalDate());
-                act.setHora(rs.getTime("hora").toLocalTime());
-                act.setTipoActividad(rs.getString("tipo_actividad"));
-                act.setEmpleadoId(rs.getInt("empleado_id"));
-                int animalId = rs.getInt("animal_id");
-                if (!rs.wasNull()) act.setAnimalId(animalId);
-                actividades.add(act);
+                int idActividad = rs.getInt("id");
+
+                Actividad act = actividadMap.get(idActividad);
+                if (act == null) {
+                    act = new Actividad();
+                    act.setId(idActividad);
+                    act.setFecha(rs.getDate("fecha").toLocalDate());
+                    act.setHora(rs.getTime("hora").toLocalTime());
+                    act.setTipoActividad(rs.getString("tipo_actividad"));
+                    act.setEmpleadoId(rs.getInt("id_empleado"));
+                    act.setAnimalesID(new ArrayList<>());
+                    actividadMap.put(idActividad, act);
+                }
+
+                int idAnimal = rs.getInt("id_animal");
+                if (!rs.wasNull()) {
+                    act.getAnimalesID().add(idAnimal);
+                }
             }
+            LoggerSistema.registrar("Agregar actividad");
+
         } catch (SQLException e) {
             System.out.println("Error al consultar actividades: " + e.getMessage());
         }
 
-        return actividades;
+        return new ArrayList<>(actividadMap.values());
     }
 
-    public ArrayList<Actividad> obtenerPorFecha(){
-        ArrayList<Actividad> actividades = new ArrayList<>();
-        String sql = "SELECT * FROM Actividad";
+		public void eliminarActividad(int id) {
+		    String sqlEliminarRelacion = "DELETE FROM actividad_animal WHERE id_actividad = ?";
+		    String sqlEliminarActividad = "DELETE FROM actividades WHERE id = ?";
 
-        try (Connection conn = ConexionBD.conectar();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+		    try (Connection conn = ConexionBD.conectar();
+		         PreparedStatement psRelacion = conn.prepareStatement(sqlEliminarRelacion);
+		         PreparedStatement psActividad = conn.prepareStatement(sqlEliminarActividad)) {
 
-            ResultSet rs = ps.executeQuery();
+		        // Borrar relaciones primero (por clave foránea)
+		        psRelacion.setInt(1, id);
+		        psRelacion.executeUpdate();
 
-            while (rs.next()) {
-                Actividad act = new Actividad();
-                act.setId(rs.getInt("id"));
-                act.setFecha(rs.getDate("fecha").toLocalDate());
-                act.setHora(rs.getTime("hora").toLocalTime());
-                act.setTipoActividad(rs.getString("tipo_actividad"));
-                act.setEmpleadoId(rs.getInt("empleado_id"));
-                int animalId = rs.getInt("animal_id");
-                if (!rs.wasNull()) act.setAnimalId(animalId);
-                actividades.add(act);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al consultar actividades: " + e.getMessage());
-        }
+		        // Borrar actividad
+		        psActividad.setInt(1, id);
+		        int filas = psActividad.executeUpdate();
 
-        return actividades;
-    }
-}
+		        if (filas > 0) {
+		            LoggerSistema.registrar("admin Eliminó actividad con ID: " + id);
+		            System.out.println("✅ Actividad eliminada correctamente.");
+		        } else {
+		            System.out.println("⚠️ No se encontró una actividad con ese ID.");
+		        }
+
+		    } catch (SQLException e) {
+		        System.out.println("❌ Error al eliminar actividad: " + e.getMessage());
+		    }
+		}
+
+	}

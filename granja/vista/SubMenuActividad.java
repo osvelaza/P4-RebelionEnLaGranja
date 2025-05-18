@@ -1,19 +1,13 @@
 package vista;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import modelo.Actividad;
-import modelo.Animal;
-import modelo.Empleado;
+import utilidades.LoggerSistema;
 
 public class SubMenuActividad {
 
-    public static void iniciar(Scanner sc){
-        int opcion=0;
-        boolean testint;
+    public static void iniciar(Scanner sc) {
+        int opcion;
 
         do {
             System.out.println("\n--- GESTIÓN DE ACTIVIDADES ---");
@@ -23,63 +17,19 @@ public class SubMenuActividad {
             System.out.println("4. Volver al menú principal");
 
             System.out.print("Elige una opción: ");
-            do{
-                testint=(!sc.hasNextInt());
-                if(testint){
-                    System.out.println("Introduce un número entero");
-                    sc.nextLine();
-                }else{
-                    opcion = sc.nextInt();
-                }
-            }while(testint);
+            opcion = sc.nextInt();
+            sc.nextLine(); // limpiar buffer
 
             switch (opcion) {
                 case 1:
-                    sc.nextLine();
-                    System.out.println("~Registro de una nueva actividad");
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-                    System.out.print("Introduce la fecha en formato YYYY-MM-DD");
-                    String fechaStr = sc.nextLine();
-                    LocalDate date = LocalDate.parse(fechaStr, formatter);
-
-                    System.out.print("Introduce la hora de la actividad: ");
-                    //Proxmimamente
-
-                    System.out.print("Actividad: ");
-                    String tipoAct = sc.nextLine();
-
-                    System.out.print("Introduce el id del empleado encargado de la actividad");
-                    ArrayList<Empleado> empleados = new ArrayList<>();
-                    empleados=controlador.EmpleadoControlador.obtenerTodos();
-                    if(empleados.isEmpty()){
-                        MenuEmpleado.registrarEmpleado();
-                    }
-                    
-                    System.out.print("Introduce el id del empleado encargado de la actividad");
-                    for(Empleado e:empleados){
-                        System.out.println(e);
-                    }
-                    int idEmp = sc.nextInt();
-
-                    System.out.print("Introduce el id del animal");
-                    ArrayList<Animal> animales = new ArrayList<>();
-                    animales=controlador.AnimalDAO.listarAnimales();
-                    if(animales.isEmpty()){
-                        MenuAnimal.registrarAnimal();
-                    }
-                    int idAnimal = sc.nextInt();
-
-                    Actividad act = new Actividad(date, null, tipoAct, idEmp, idAnimal);
-                    controlador.ActividadControlador.registrarActividad(act);
+                    MenuActividad.registrarActividad();
                     break;
                 case 2:
-                    LocalDate fech = null;
-                    MenuActividad.mostrarActividades(fech);
+                    MenuActividad.mostrarActividades();
+                    LoggerSistema.registrar("mostrar");
                     break;
                 case 3:
-                    MenuActividad.borrarActividad();
+                    MenuActividad.eliminarActividad();
                     break;
                 case 4:
                     System.out.println("🔙 Volviendo al menú principal...");

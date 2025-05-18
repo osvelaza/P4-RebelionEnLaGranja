@@ -2,6 +2,7 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Actividad {
     private int id;
@@ -9,21 +10,20 @@ public class Actividad {
     private LocalTime hora;
     private String tipoActividad;
     private int empleadoId;
-    private Integer animalId; // Puede ser null
+    private ArrayList<Integer>animalesID; // Puede ser null
 
     public Actividad() {}
 
-    public Actividad(LocalDate fecha, LocalTime hora, String tipoActividad, int empleadoId, int animalId) {
+    public Actividad(int id, LocalDate fecha, LocalTime hora, String tipoActividad, int empleadoId, Integer animalId, ArrayList<Integer> animalesID) {
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
         this.tipoActividad = tipoActividad;
         this.empleadoId = empleadoId;
-        this.animalId = animalId;
+        this.animalesID = animalesID;
     }
 
     // Getters y Setters
-    
     //id
     public int getId() {
     	return id; 
@@ -65,15 +65,15 @@ public class Actividad {
     }
 
     //animal-id
-    public Integer getAnimalId() { 
-    	return animalId; 
+    public ArrayList<Integer> getAnimalesID() {
+        return animalesID;
     }
-    public void setAnimalId(Integer animalId) { 
-    	this.animalId = animalId; 
+    public void setAnimalesID(ArrayList<Integer> animalesID) {
+        this.animalesID = animalesID;
     }
 
     @Override
     public String toString() {
-        return "Actividad{" + "id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", tipoActividad='" + tipoActividad + '\'' + ", empleadoId=" + empleadoId + ", animalId=" + animalId + '}';
+        return "Actividad{" + "id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", tipoActividad='" + tipoActividad + '\'' + ", empleadoId=" + empleadoId + ", animalId=" + animalesID + '}';
     }
 }

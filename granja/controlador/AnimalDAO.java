@@ -67,6 +67,28 @@ public class AnimalDAO {
         }
         return lista;
     }
+
+            public static void camEstadoBD(int id,String estado){
+                Connection conn = null;
+                PreparedStatement stmt = null;
+
+                try {
+                    conn = ConexionBD.conectar();
+                    String sql = "UPDATE ANIMALES SET estado_salud=? where id=?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, estado);  // Aquí ponemos el string de la salud
+                    stmt.setInt(2   , id);  // Aquí ponemos el id del animal a editar
+                } catch (SQLException e) {  
+                    System.out.println("❌ Error al conectar con la base de datos. "+e.getMessage());
+                } finally {
+                    try {
+                        if (stmt != null) stmt.close();
+                        if (conn != null) conn.close();
+                    } catch (SQLException e) {
+                        System.out.println("❌ Error al cerrar la conexión. s. "+e.getMessage());
+                    }
+                }
+            }
     
     public static boolean borrarAnimal(int id){
         Connection conn = null;

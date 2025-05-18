@@ -27,4 +27,13 @@ public class general {
     }
     return false;
     }
+
+    public static boolean checkActivDiaria(String input) {
+    for (activDiaria value : activDiaria.values()) {
+        if (value.name().equalsIgnoreCase(input.trim())) {
+            return true; 
+        }
+    }
+    return false;
+    }
 }

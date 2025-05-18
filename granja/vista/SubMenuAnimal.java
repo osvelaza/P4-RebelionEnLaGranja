@@ -10,9 +10,10 @@ public class SubMenuAnimal {
         do {
             System.out.println("\n--- GESTIÓN DE ANIMALES ---");
             System.out.println("1. Registrar nuevo animal");
-            System.out.println("2. Consultar animales");
-            System.out.println("3. Borrar animal");
-            System.out.println("4. Volver al menú principal");
+            System.out.println("2. Cambiar el estado de un animal");
+            System.out.println("3. Consultar animales");
+            System.out.println("4. Borrar animal");
+            System.out.println("5. Volver al menú principal");
 
             System.out.print("Elige una opción: ");
             do{
@@ -30,19 +31,22 @@ public class SubMenuAnimal {
                     MenuAnimal.registrarAnimal();
                     break;
                 case 2:
-                    MenuAnimal.mostrarAnimales();
-                    LoggerSistema.registrar("mostrar");
+                    MenuAnimal.cambEstado();
                     break;
                 case 3:
-                    MenuAnimal.borrarAnimal();
+                    MenuAnimal.mostrarAnimales();
+                    LoggerSistema.registrar("mostrar animales");
                     break;
                 case 4:
+                    MenuAnimal.borrarAnimal();
+                    break;
+                case 5:
                     System.out.println("🔙 Volviendo al menú principal...");
                     break;
                 default:
                     System.out.println("❌ Opción no válida. Intenta de nuevo.");
             }
 
-        } while (opcion != 4);
+        } while (opcion != 5);
     }
 }
