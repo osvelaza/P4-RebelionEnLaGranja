@@ -36,20 +36,20 @@ public class MenuAnimal {
             System.out.print("Estado de salud: ");
             String salud;
             do {
-                System.out.print("Introduce la ubicación del animal: ");
+                System.out.print("Introduce la salud del animal: ");
                 for (saludAnimal value : saludAnimal.values()){
-                    System.out.print(value.toString());
+                    System.out.print(value.toString()+" ");
                 }
                 System.out.println();
                 salud = sc.nextLine();
-            } while (!enumJ.general.checkEnumAnimal(salud));
+            } while (!enumJ.general.checkEnumSaludAnimal(salud));
             salud=salud.toLowerCase();
 
             String ubicacion;
             do {
                 System.out.print("Introduce la ubicación del animal: ");
                 for (ubicacionAnimal value : ubicacionAnimal.values()){
-                    System.out.print(value.toString());
+                    System.out.print(value.toString()+" ");
                 }
                 System.out.println();
                 ubicacion = sc.nextLine();
