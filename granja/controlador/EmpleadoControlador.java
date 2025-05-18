@@ -29,6 +29,30 @@ public class EmpleadoControlador {
         }
     }
 
+    public static void camEstadoBD(int id, String rol){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = ConexionBD.conectar();
+            String sql = "UPDATE empleados SET rol=? where id=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, rol);  // Aquí ponemos el string de la salud
+            stmt.setInt(2   , id);  // Aquí ponemos el id del animal a editar
+            stmt.executeUpdate();
+            utilidades.LoggerSistema.registrar("Cambiar rol empleado a "+rol);
+        } catch (SQLException e) {  
+            System.out.println("❌ Error al conectar con la base de datos. "+e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println("❌ Error al cerrar la conexión. s. "+e.getMessage());
+            }
+        }
+    }
+
     public static ArrayList<Empleado> obtenerTodos(){
         ArrayList<Empleado> empleados = new ArrayList<>();
         String sql = "SELECT * FROM empleados";

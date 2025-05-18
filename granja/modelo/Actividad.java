@@ -74,6 +74,6 @@ public class Actividad {
 
     @Override
     public String toString() {
-        return "Actividad{" + "id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", tipoActividad='" + tipoActividad + '\'' + ", empleadoId=" + empleadoId + ", animalId=" + animalesID + '}';
+        return "Actividad: " + "id=" + id + " , fecha=" + fecha + ", hora=" + hora + ", tipoActividad='" + tipoActividad + '\'' + ", empleadoId=" + empleadoId + ", animalId=" + animalesID;
     }
 }

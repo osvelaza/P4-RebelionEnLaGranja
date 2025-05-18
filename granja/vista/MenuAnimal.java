@@ -43,6 +43,7 @@ public class MenuAnimal {
                 System.out.println();
                 salud = sc.nextLine();
             } while (!enumJ.general.checkEnumAnimal(salud));
+            salud=salud.toLowerCase();
 
             String ubicacion;
             do {
@@ -69,7 +70,7 @@ public class MenuAnimal {
         int id;
         String estado;
         mostrarAnimales();
-        System.out.println("Introduce los id del animal:");
+        System.out.println("Introduce el id del animal:");
         id=scanner.nextInt();
         do {
             System.out.println("Introduce el estado al que lo quieres cambiar");
@@ -78,8 +79,10 @@ public class MenuAnimal {
                 System.out.println();
             }
             System.out.println();
+            scanner.nextLine();
             estado = scanner.nextLine();
         } while (!enumJ.general.checkEnumSaludAnimal(estado));
+        estado=estado.toLowerCase();
         controlador.AnimalDAO.camEstadoBD(id,estado);
     }
 
