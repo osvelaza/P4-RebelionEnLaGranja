@@ -9,7 +9,7 @@ public class ConexionBD {
         Connection conexion = null;
         String url = "jdbc:mysql://localhost:3305/granja";
         String usuario = "root";
-        String contrasena = "urano";
+        String contrasena = "password";
 
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasena);
