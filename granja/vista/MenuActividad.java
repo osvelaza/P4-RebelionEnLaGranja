@@ -4,7 +4,6 @@ import controlador.ActividadControlador;
 import controlador.AnimalDAO;
 import controlador.EmpleadoControlador;
 import enumJ.activDiaria;
-import enumJ.saludAnimal;
 import modelo.Actividad;
 import modelo.Animal;
 import modelo.Empleado;

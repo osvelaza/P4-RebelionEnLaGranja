@@ -2,7 +2,6 @@ package vista;
 
 import controlador.EmpleadoControlador;
 import enumJ.rolEmpleado;
-import enumJ.saludAnimal;
 import modelo.Empleado;
 import utilidades.LoggerSistema;
 
@@ -73,7 +72,7 @@ public class MenuEmpleado {
         rol=rol.toLowerCase();
         controlador.camEstadoBD(id,rol);
     }
-    
+
     public static void mostrarEmpleados(){
         ArrayList<Empleado> empleados = controlador.obtenerTodos();
 
