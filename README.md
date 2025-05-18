@@ -66,7 +66,3 @@ java main.Main
  ┃ ┣ 📜 Main.java
  ┣ 📜 README.md
  ┣ 📜 granja.sql
-
-
-📜 Licencia
-Este proyecto se encuentra bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.
