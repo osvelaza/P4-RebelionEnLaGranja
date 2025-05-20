@@ -1,0 +1,9 @@
+[2025-05-18 18:29] - Acción realizada: mostrar animales
+[2025-05-18 18:30] - Acción realizada: mostrar animales
+[2025-05-18 18:36] - Acción realizada: mostrar animales
+[2025-05-18 18:38] - Acción realizada: mostrar animales
+[2025-05-18 20:23] - Acción realizada: Mostrar empleados
+[2025-05-18 20:24] - Acción realizada: Cambiar estado de salud del animal 9 a bien
+[2025-05-18 20:27] - Acción realizada: Cambiar rol empleado a veterinario
+[2025-05-18 20:27] - Acción realizada: Mostrar empleados
+[2025-05-18 20:32] - Acción realizada: Mostrar empleados
