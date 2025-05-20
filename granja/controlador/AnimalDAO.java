@@ -44,6 +44,7 @@ public class AnimalDAO {
 
         try (Connection conn = ConexionBD.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
+            
             ResultSet rs = stmt.executeQuery()) {
             System.out.println("\n** Lista de Animales **");
             while (rs.next()) {
